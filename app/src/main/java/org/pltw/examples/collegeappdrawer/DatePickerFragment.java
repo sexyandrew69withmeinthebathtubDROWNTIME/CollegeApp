@@ -15,6 +15,7 @@ import java.util.Date;
  */
 public class DatePickerFragment extends android.support.v4.app.DialogFragment {
     static String DATE_ARGUMENT = "Date of Birth";
+    public static final String EXTRA_DATE_OF_BIRTH = "org.pltw.examples.collegeappanswerkey.dateofbirth";
     String TAG = "lol";
     DatePicker datepicker;
     @Override

@@ -1,5 +1,7 @@
 package org.pltw.examples.collegeappdrawer;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -25,6 +28,10 @@ public class ProfileFragment extends Fragment {
     Button dob;
     Date date = new Date();
     private static final int REQUEST_DATE_OF_BIRTH = 0;
+    private static final int WITHIN_8_YEARS = 2008;
+    private static final String TAG = "ProfileFragment";
+    private SimpleDateFormat formatter;
+
 
     @Nullable
     @Override
@@ -36,7 +43,7 @@ public class ProfileFragment extends Fragment {
         member1.setfName("Ada");
         member1.setlName("Lovelace");
         member1.setDate(date);
-
+        formatter = new SimpleDateFormat("MM/dd/yyyy");
 
         fName = (TextView) rootView.findViewById(R.id.profile_f_name);
         lName = (TextView) rootView.findViewById(R.id.profile_l_name);
@@ -74,8 +81,20 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        dob.setText(member1.getDate().toString());
+        dob.setText(formatter.format(member1.getDate()));
         return rootView;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        if (requestCode == REQUEST_DATE_OF_BIRTH) {
+            Date date = (Date)data.getSerializableExtra(DatePickerFragment.EXTRA_DATE_OF_BIRTH);
+            member1.setDate(date);
+            dob.setText(formatter.format(member1.getDate()));
+                }
+
     }
 
 }
